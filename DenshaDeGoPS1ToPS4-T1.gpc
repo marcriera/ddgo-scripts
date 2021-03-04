@@ -1,0 +1,172 @@
+// Script to use PS1/N64/SS/DC Densha de GO! controllers with Densha de GO! Hashirou Yamanote Sen (PS4/Switch)
+
+// Based on the code by EddieLau for the Titan Two: https://github.com/tylau0/DenGo/blob/main/DenshaDeGoPS1ToPS4MayFlash.gpc
+// Requires enabling advanced controls (analog pressure + non-step)
+
+
+// Adjust the following values to the input indices from your adapter
+
+define DPAD_LEFT = HID_BUTTON_12;
+define DPAD_RIGHT = HID_BUTTON_13;
+
+define BUTTON_SELECT = HID_BUTTON_2;
+define BUTTON_START = HID_BUTTON_3;
+
+define BUTTON_R1 = HID_BUTTON_4;
+define BUTTON_R2 = HID_BUTTON_5;
+define BUTTON_L1 = HID_BUTTON_7;
+define BUTTON_L2 = HID_BUTTON_8;
+
+define BUTTON_TRIANGLE = HID_BUTTON_14;
+define BUTTON_SQUARE = HID_BUTTON_15;
+define BUTTON_CIRCLE = HID_BUTTON_16;
+define BUTTON_CROSS = HID_BUTTON_17;
+
+
+// Do not modify anything from here on
+
+unmap ALL_REMAPS;
+remap BUTTON_SELECT -> PS4_TRIANGLE;
+remap BUTTON_START -> PS4_OPTIONS;
+remap BUTTON_SQUARE -> PS4_SQUARE;
+remap BUTTON_CIRCLE -> PS4_CIRCLE;
+remap BUTTON_CROSS -> PS4_CROSS;
+remap BUTTON_L2 -> PS4_L2;
+remap HID_STICK_2_X -> PS4_LX;
+remap HID_STICK_2_Y -> PS4_LY;
+remap HID_STICK_1_X -> PS4_RX;
+
+int LAST_PS4_RX = 0;
+int LAST_PS4_LX = 0;
+int LAST_PS4_LY = 0;
+int LAST_PS4_L2 = 0;
+
+main {
+
+	// Green light
+	set_led(LED_1, 0);
+	set_led(LED_2, 0);
+	set_led(LED_3, 1);
+
+    // Brake
+    if (!get_val(BUTTON_L1) && !get_val(BUTTON_L2) && !get_val(BUTTON_R1) && !get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // EB
+        LAST_PS4_RX = 100;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = -100;
+        LAST_PS4_L2 = 100;
+    }
+    else if (!get_val(BUTTON_L1) && get_val(BUTTON_L2) && get_val(BUTTON_R1) && !get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B8
+        LAST_PS4_RX = 100;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = -100;
+        LAST_PS4_L2 = 0;
+    }
+    else if (get_val(BUTTON_L1) && get_val(BUTTON_L2) && get_val(BUTTON_R1) && !get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B7
+        LAST_PS4_RX = 90;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = -90;
+        LAST_PS4_L2 = 0; 
+    }
+    else if (!get_val(BUTTON_L1) && !get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B6
+        LAST_PS4_RX = 80;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = -80;
+        LAST_PS4_L2 = 0; 
+    }
+    else if (get_val(BUTTON_L1) && !get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B5
+        LAST_PS4_RX = 70;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = -70
+        LAST_PS4_L2 = 0;
+    }
+    else if (!get_val(BUTTON_L1) && get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B4
+        LAST_PS4_RX = 60;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = -60;
+        LAST_PS4_L2 = 0;
+    }
+    else if (get_val(BUTTON_L1) && get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B3
+        LAST_PS4_RX = 50;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = -50;
+        LAST_PS4_L2 = 0; 
+    }
+    else if (!get_val(BUTTON_L1) && !get_val(BUTTON_L2) && get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B2
+        LAST_PS4_RX = 40;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = -40;
+        LAST_PS4_L2 = 0; 
+    }
+    else if (get_val(BUTTON_L1) && !get_val(BUTTON_L2) && get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B1
+        LAST_PS4_RX = 30;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = -30;
+        LAST_PS4_L2 = 0; 
+    }
+    else if (!get_val(BUTTON_L1) && get_val(BUTTON_L2) && get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B0
+        LAST_PS4_RX = 0;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = 0;
+        LAST_PS4_L2 = 0;
+    }
+    
+    // Power
+    if (get_val(BUTTON_TRIANGLE) && !get_val(DPAD_LEFT) && !get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P5
+        LAST_PS4_RX = 0;
+        LAST_PS4_LX = -100;
+        LAST_PS4_LY = 100;
+        LAST_PS4_L2 = 0;
+    }
+    else if (!get_val(BUTTON_TRIANGLE) && get_val(DPAD_LEFT) && !get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P4
+        if (LAST_PS4_LY >= 70) {
+            LAST_PS4_RX = 0;
+            LAST_PS4_LX = -90;
+            LAST_PS4_LY = 90;
+            LAST_PS4_L2 = 0;
+        }
+        else {  // P0 for adapters which don't support simultaneous DPAD presses
+            LAST_PS4_RX = 0;
+            LAST_PS4_LX = 0;
+            LAST_PS4_LY = 0;
+            LAST_PS4_L2 = 0;
+        }
+    }
+    else if (get_val(BUTTON_TRIANGLE) && get_val(DPAD_LEFT) && !get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P3
+        LAST_PS4_RX = 0;
+        LAST_PS4_LX = -70;
+        LAST_PS4_LY = 70;
+        LAST_PS4_L2 = 0;
+    }
+    else if (!get_val(BUTTON_TRIANGLE) && !get_val(DPAD_LEFT) && get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P2
+        LAST_PS4_RX = 0;
+        LAST_PS4_LX = -50;
+        LAST_PS4_LY = 50;
+        LAST_PS4_L2 = 0;  
+    }
+    else if (get_val(BUTTON_TRIANGLE) && !get_val(DPAD_LEFT) && get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P1
+        LAST_PS4_RX = 0;
+        LAST_PS4_LX = -30;
+        LAST_PS4_LY = 30;
+        LAST_PS4_L2 = 0;
+    }
+    else if (!get_val(BUTTON_TRIANGLE) && get_val(DPAD_LEFT) && get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P0
+        LAST_PS4_RX = 0;
+        LAST_PS4_LX = 0;
+        LAST_PS4_LY = 0;
+        LAST_PS4_L2 = 0; 
+    }
+    
+    set_val(PS4_RX, LAST_PS4_RX);
+    set_val(PS4_LX, LAST_PS4_LX);
+    set_val(PS4_LY, LAST_PS4_LY);
+    set_val(PS4_L2, LAST_PS4_L2);
+    
+    clear_input();
+}
+
+function clear_input() { // Clear unwanted input
+    set_val(PS4_L1, 0);
+    set_val(PS4_R1, 0);
+    set_val(PS4_R2, 0);
+    return;
+}

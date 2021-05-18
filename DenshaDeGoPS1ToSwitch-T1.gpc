@@ -62,15 +62,15 @@ main {
         LAST_PS4_L2 = 0;
     }
     else if (get_val(BUTTON_L1) && get_val(BUTTON_L2) && get_val(BUTTON_R1) && !get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B7
-        LAST_PS4_RX = 90;
+        LAST_PS4_RX = 85;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -90;
+        LAST_PS4_LY = -85;
         LAST_PS4_L2 = 0; 
     }
     else if (!get_val(BUTTON_L1) && !get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B6
-        LAST_PS4_RX = 80;
+        LAST_PS4_RX = 75;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -80;
+        LAST_PS4_LY = -75;
         LAST_PS4_L2 = 0; 
     }
     else if (get_val(BUTTON_L1) && !get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B5

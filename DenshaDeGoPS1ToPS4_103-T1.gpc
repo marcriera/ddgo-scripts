@@ -3,9 +3,13 @@
 // Based on the code by EddieLau for the Titan Two: https://github.com/tylau0/DenGo/blob/main/DenshaDeGoPS1ToPS4MayFlash.gpc
 // Requires enabling advanced controls (analog pressure + non-step)
 
+// Holding START enables the use of buttons as a D-Pad (to navigate menus)
+
 
 // Adjust the following values to the input indices from your adapter
 
+define DPAD_UP = HID_BUTTON_10;
+define DPAD_DOWN = HID_BUTTON_11;
 define DPAD_LEFT = HID_BUTTON_12;
 define DPAD_RIGHT = HID_BUTTON_13;
 
@@ -35,72 +39,81 @@ remap BUTTON_L2 -> PS4_L2;
 remap HID_STICK_2_X -> PS4_LX;
 remap HID_STICK_2_Y -> PS4_LY;
 remap HID_STICK_1_X -> PS4_RX;
+remap DPAD_UP -> PS4_UP;
+remap DPAD_DOWN -> PS4_DOWN;
+remap DPAD_LEFT -> PS4_LEFT;
+remap DPAD_RIGHT -> PS4_RIGHT;
 
 int LAST_PS4_RX = 0;
 int LAST_PS4_LX = 0;
 int LAST_PS4_LY = 0;
 int LAST_PS4_L2 = 0;
 
+int DPAD_MODE = 0;
+int START_HOLD = 0;
+
 main {
 
-	// Green light
-	set_led(LED_1, 0);
-	set_led(LED_2, 0);
-	set_led(LED_3, 1);
+    // Green light
+    set_led(LED_1, 0);
+    set_led(LED_2, 0);
+    set_led(LED_3, 1);
+
+    toggle_dpad_mode();
 
     // Brake
     if (!get_val(BUTTON_L1) && !get_val(BUTTON_L2) && !get_val(BUTTON_R1) && !get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // EB
         LAST_PS4_RX = 100;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -100;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 100;
     }
     else if (!get_val(BUTTON_L1) && get_val(BUTTON_L2) && get_val(BUTTON_R1) && !get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B8
         LAST_PS4_RX = 100;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -100;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0;
     }
     else if (get_val(BUTTON_L1) && get_val(BUTTON_L2) && get_val(BUTTON_R1) && !get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B7
         LAST_PS4_RX = 90;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -90;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0; 
     }
     else if (!get_val(BUTTON_L1) && !get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B6
         LAST_PS4_RX = 80;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -80;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0; 
     }
     else if (get_val(BUTTON_L1) && !get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B5
         LAST_PS4_RX = 70;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -70
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0;
     }
     else if (!get_val(BUTTON_L1) && get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B4
         LAST_PS4_RX = 60;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -60;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0;
     }
     else if (get_val(BUTTON_L1) && get_val(BUTTON_L2) && !get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B3
         LAST_PS4_RX = 50;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -50;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0; 
     }
     else if (!get_val(BUTTON_L1) && !get_val(BUTTON_L2) && get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B2
         LAST_PS4_RX = 40;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -40;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0; 
     }
     else if (get_val(BUTTON_L1) && !get_val(BUTTON_L2) && get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B1
         LAST_PS4_RX = 30;
         LAST_PS4_LX = 0;
-        LAST_PS4_LY = -30;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0; 
     }
     else if (!get_val(BUTTON_L1) && get_val(BUTTON_L2) && get_val(BUTTON_R1) && get_val(BUTTON_R2) && LAST_PS4_LY <= 0) {  // B0
@@ -114,14 +127,14 @@ main {
     if (get_val(BUTTON_TRIANGLE) && !get_val(DPAD_LEFT) && !get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P5
         LAST_PS4_RX = 0;
         LAST_PS4_LX = -100;
-        LAST_PS4_LY = 100;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0;
     }
     else if (!get_val(BUTTON_TRIANGLE) && get_val(DPAD_LEFT) && !get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P4
         if (LAST_PS4_LY >= 70) {
             LAST_PS4_RX = 0;
             LAST_PS4_LX = -85;
-            LAST_PS4_LY = 85;
+            LAST_PS4_LY = 0;
             LAST_PS4_L2 = 0;
         }
         else {  // P0 for adapters which don't support simultaneous DPAD presses
@@ -134,19 +147,19 @@ main {
     else if (get_val(BUTTON_TRIANGLE) && get_val(DPAD_LEFT) && !get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P3
         LAST_PS4_RX = 0;
         LAST_PS4_LX = -70;
-        LAST_PS4_LY = 70;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0;
     }
     else if (!get_val(BUTTON_TRIANGLE) && !get_val(DPAD_LEFT) && get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P2
         LAST_PS4_RX = 0;
         LAST_PS4_LX = -50;
-        LAST_PS4_LY = 50;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0;  
     }
     else if (get_val(BUTTON_TRIANGLE) && !get_val(DPAD_LEFT) && get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P1
         LAST_PS4_RX = 0;
         LAST_PS4_LX = -30;
-        LAST_PS4_LY = 30;
+        LAST_PS4_LY = 0;
         LAST_PS4_L2 = 0;
     }
     else if (!get_val(BUTTON_TRIANGLE) && get_val(DPAD_LEFT) && get_val(DPAD_RIGHT) && LAST_PS4_LY >= 0) {  // P0
@@ -162,6 +175,62 @@ main {
     set_val(PS4_L2, LAST_PS4_L2);
     
     clear_input();
+    
+    // Press SELECT+START to use buttons as D-pad
+    if (DPAD_MODE == 1) {
+        if (get_val(BUTTON_SELECT)) {
+            set_val(PS4_UP, 100);
+        }
+        else {
+            set_val(PS4_UP, 0);
+        }
+        if (get_val(BUTTON_CROSS)) {
+            set_val(PS4_DOWN, 100);
+        }
+        else {
+            set_val(PS4_DOWN, 0);
+        }
+        if (get_val(BUTTON_SQUARE)) {
+            set_val(PS4_LEFT, 100);
+        }
+        else {
+            set_val(PS4_LEFT, 0);
+        }
+        if (get_val(BUTTON_CIRCLE)) {
+            set_val(PS4_RIGHT, 100);
+        }
+        else {
+            set_val(PS4_RIGHT, 0);
+        }
+        set_val(BUTTON_SELECT, 0);
+        set_val(BUTTON_SQUARE, 0);
+        set_val(BUTTON_CIRCLE, 0);
+        set_val(BUTTON_CROSS, 0);
+    }
+    else {
+        set_val(PS4_UP, 0);
+        set_val(PS4_DOWN, 0);
+        set_val(PS4_LEFT, 0);
+        set_val(PS4_RIGHT, 0);
+    }
+}
+
+function toggle_dpad_mode() { // Toggle D-Pad mode
+    if (get_val(BUTTON_START)) {
+        START_HOLD = START_HOLD + 1;
+    }
+    else {
+        START_HOLD = 0;
+    }
+    
+    if (START_HOLD > 15) {
+        set_val(BUTTON_START, 0);
+        DPAD_MODE = 1;
+    }
+    else {
+        DPAD_MODE = 0;
+    }
+    return;
 }
 
 function clear_input() { // Clear unwanted input

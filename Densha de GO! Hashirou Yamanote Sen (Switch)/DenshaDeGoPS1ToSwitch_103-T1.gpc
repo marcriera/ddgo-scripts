@@ -1,4 +1,5 @@
 // Script to use PS1/N64/SS/DC Densha de GO! controllers with Densha de GO! Hashirou Yamanote Sen (PS4/Switch)
+// Written by Marc Riera, 2021
 
 // Based on the code by EddieLau for the Titan Two: https://github.com/tylau0/DenGo/blob/main/DenshaDeGoPS1ToPS4MayFlash.gpc
 // Requires enabling advanced controls (analog pressure + non-step)

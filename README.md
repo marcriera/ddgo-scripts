@@ -15,3 +15,9 @@ Hold **START** to use **A**, **B**, **C** and **SELECT** as a D-pad and navigate
 - **DenshaDeGoPS1ToSwitch_103-T1.gpc**: to connect PS1 controllers to a Switch. For use with the 103 series train.
 
 Hold **START** to use **A**, **B**, **C** and **SELECT** as a D-pad and navigate game menus.
+
+**Densha de GO! (PS1-PS2)**
+
+- **ZuikiToPS1.gpc**: to connect a Zuiki Switch controller to a real PS1/PS2 (via adapter/PADEMU) or emulator.
+
+The **D-Pad** is mapped to the **left stick** and **X** is mapped to **L3** for use with [PS2 cheats](https://marcriera.github.io/ddgo-controller-docs/adapters/#playstation-2-cheat-codes-for-playstation-1-controllers).

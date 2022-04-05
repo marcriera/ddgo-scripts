@@ -1,8 +1,10 @@
+//#include <titanone.gph>
+
 // Script to use a Zuiki Switch controller with Densha de GO! games for the PS1/PS2 on emulators or real hardware
 // Written by Marc Riera, 2022
 
 // D-Pad is mapped to left stick and X is mapped to L3 for use with for use with PS2 cheats:
-https://marcriera.github.io/ddgo-controller-docs/adapters/#playstation-2-cheat-codes-for-playstation-1-controllers
+// https://marcriera.github.io/ddgo-controller-docs/adapters/#playstation-2-cheat-codes-for-playstation-1-controllers
 
 unmap HID_XINPUT_1;
 unmap PS4_PS;

@@ -1,0 +1,209 @@
+//#include <titanone.gph>
+
+// Script to use a DGOC-44U controller or modded DdGO! Plug and Play with Densha de GO! games for the PS1/PS2 on emulators or real hardware
+// Written by Marc Riera, 2022
+
+// D-Pad is mapped to left stick and X is mapped to L3 for use with for use with PS2 cheats:
+// https://marcriera.github.io/ddgo-controller-docs/adapters/#playstation-2-cheat-codes-for-playstation-1-controllers
+
+unmap PS4_PS;
+remap PS4_SQUARE -> PS4_CROSS;
+remap PS4_CROSS -> PS4_SQUARE;
+remap PS4_RX -> PS4_LX;
+remap PS4_RY -> PS4_LY;
+unmap PS4_RX;
+unmap PS4_RY;
+
+int powerNotch = 0;
+int brakeNotch = 9;
+
+main {
+
+    // Teal light
+    set_led(LED_1, 1);
+    set_led(LED_2, 0);
+    set_led(LED_3, 1);
+
+
+    // X button
+    if (get_val(HID_BUTTON_14) == 100) {
+        set_val(PS4_L3, 100);
+    }
+    // SELECT button
+    if (get_val(HID_BUTTON_7) == 100) {
+        set_val(PS4_SHARE, 100);
+    }
+    // START button
+    if (get_val(HID_BUTTON_4) == 100) {
+        set_val(PS4_OPTIONS, 100);
+    }
+    
+    // D-Pad
+    if (get_val(HID_BUTTON_7) == 100 && get_val(HID_BUTTON_14) == 100) {  // UP
+        set_val(PS4_SHARE, 0);
+        set_val(PS4_L3, 0);
+        set_val(PS4_RY, -100);
+    }
+    if (get_val(HID_BUTTON_7) == 100 && get_val(HID_BUTTON_17) == 100) {  // DOWN
+        set_val(PS4_SHARE, 0);
+        set_val(PS4_SQUARE, 0);
+        set_val(PS4_RY, 100);
+    }
+    if (get_val(HID_BUTTON_7) == 100 && get_val(HID_BUTTON_16) == 100) {  // LEFT
+        set_val(PS4_SHARE, 0);
+        set_val(PS4_CROSS, 0);
+        set_val(PS4_RX, -100);
+    }
+    if (get_val(HID_BUTTON_7) == 100 && get_val(HID_BUTTON_15) == 100) {  // RIGHT
+        set_val(PS4_SHARE, 0);
+        set_val(PS4_CIRCLE, 0);
+        set_val(PS4_RX, 100);
+    }
+    
+    // Brake
+    if (get_val(HID_STICK_2_X) == 45) {  // EB
+        brakeNotch = 9;
+    }
+    if (get_val(HID_STICK_2_X) == 41) {  // B8
+        brakeNotch = 8;
+    }
+    if (get_val(HID_STICK_2_X) == 39) {  // B7
+        brakeNotch = 7;
+    }
+    if (get_val(HID_STICK_2_X) == 37) {  // B6
+        brakeNotch = 6;
+    }
+    if (get_val(HID_STICK_2_X) == 31) {  // B5
+        brakeNotch = 5;
+    }
+    if (get_val(HID_STICK_2_X) == 27) {  // B4
+        brakeNotch = 4;
+    }
+    if (get_val(HID_STICK_2_X) == 20) {  // B3
+        brakeNotch = 3;
+    }
+    if (get_val(HID_STICK_2_X) == 16) {  // B2
+        brakeNotch = 2;
+    }
+    if (get_val(HID_STICK_2_X) == 8) {  // B1
+        brakeNotch = 1;
+    }
+    if (get_val(HID_STICK_2_X) == -5) {  // N
+        brakeNotch = 0;
+    }
+    
+    if (brakeNotch == 9) {
+        set_val(PS4_L1, 0);
+        set_val(PS4_L2, 0);
+        set_val(PS4_R1, 0);
+        set_val(PS4_R2, 0);
+    }
+    if (brakeNotch == 8) {
+        set_val(PS4_L1, 0);
+        set_val(PS4_L2, 100);
+        set_val(PS4_R1, 100);
+        set_val(PS4_R2, 0);
+    }
+    if (brakeNotch == 7) {
+        set_val(PS4_L1, 100);
+        set_val(PS4_L2, 100);
+        set_val(PS4_R1, 100);
+        set_val(PS4_R2, 0);
+    }
+    if (brakeNotch == 6) {
+        set_val(PS4_L1, 0);
+        set_val(PS4_L2, 0);
+        set_val(PS4_R1, 0);
+        set_val(PS4_R2, 100);
+    }
+    if (brakeNotch == 5) {
+        set_val(PS4_L1, 100);
+        set_val(PS4_L2, 0);
+        set_val(PS4_R1, 0);
+        set_val(PS4_R2, 100);
+    }
+    if (brakeNotch == 4) {
+        set_val(PS4_L1, 0);
+        set_val(PS4_L2, 100);
+        set_val(PS4_R1, 0);
+        set_val(PS4_R2, 100);
+    }
+    if (brakeNotch == 3) {
+        set_val(PS4_L1, 100);
+        set_val(PS4_L2, 100);
+        set_val(PS4_R1, 0);
+        set_val(PS4_R2, 100);
+    }
+    if (brakeNotch == 2) {
+        set_val(PS4_L1, 0);
+        set_val(PS4_L2, 0);
+        set_val(PS4_R1, 100);
+        set_val(PS4_R2, 100);
+    }
+    if (brakeNotch == 1) {
+        set_val(PS4_L1, 100);
+        set_val(PS4_L2, 0);
+        set_val(PS4_R1, 100);
+        set_val(PS4_R2, 100);
+    }
+    if (brakeNotch == 0) {
+        set_val(PS4_L1, 0);
+        set_val(PS4_L2, 100);
+        set_val(PS4_R1, 100);
+        set_val(PS4_R2, 100);
+    }
+    
+    // Power
+    if (get_val(HID_STICK_2_Y) == 1) {  // N
+        powerNotch = 0;
+    }
+    if (get_val(HID_STICK_2_Y) == -14) {  // P1
+        powerNotch = 1;
+    }
+    if (get_val(HID_STICK_2_Y) == -34) {  // P2
+        powerNotch = 2;
+    }
+    if (get_val(HID_STICK_2_Y) == -50) {  // P3
+        powerNotch = 3;
+    }
+    if (get_val(HID_STICK_2_Y) == -74) {  // P4
+        powerNotch = 4;
+    }
+    if (get_val(HID_STICK_2_Y) == -100) {  // P5
+        powerNotch = 5;
+    }
+    
+    if (powerNotch == 0) {
+        set_val(PS4_LEFT, 100);
+        set_val(PS4_RIGHT, 100);
+        set_val(PS4_TRIANGLE, 0);
+    }
+    if (powerNotch == 1) {
+        set_val(PS4_LEFT, 0);
+        set_val(PS4_RIGHT, 100);
+        set_val(PS4_TRIANGLE, 100);
+    }
+    if (powerNotch == 2) {
+        set_val(PS4_LEFT, 0);
+        set_val(PS4_RIGHT, 100);
+        set_val(PS4_TRIANGLE, 0);
+    }
+    if (powerNotch == 3) {
+        set_val(PS4_LEFT, 100);
+        set_val(PS4_RIGHT, 0);
+        set_val(PS4_TRIANGLE, 100);
+    }
+    if (powerNotch == 4) {
+        set_val(PS4_LEFT, 100);
+        set_val(PS4_RIGHT, 0);
+        set_val(PS4_TRIANGLE, 0);
+    }
+    if (powerNotch == 5) {
+        set_val(PS4_LEFT, 0);
+        set_val(PS4_RIGHT, 0);
+        set_val(PS4_TRIANGLE, 100);
+    }
+    
+    set_val(PS4_UP, 100);
+    set_val(PS4_DOWN, 100);
+}

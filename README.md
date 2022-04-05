@@ -21,5 +21,6 @@ Hold **START** to use **A**, **B**, **C** and **SELECT** as a D-pad and navigate
 **Densha de GO! (PS1-PS2)**
 
 - **ZuikiToPS1-T1.gpc**: to connect a Zuiki Switch controller to a real PS1/PS2 (via adapter/PADEMU) or emulator.
+- **DGOC-44UToPS1-T1.gpc**: to connect a DGOC-44U controller or modded DdGO Plug and Play to a real PS1/PS2 (via adapter/PADEMU) or emulator.
 
 The **D-Pad** is mapped to the **left stick** and **X** is mapped to **L3** for use with [PS2 cheats](https://marcriera.github.io/ddgo-controller-docs/adapters/#playstation-2-cheat-codes-for-playstation-1-controllers).
